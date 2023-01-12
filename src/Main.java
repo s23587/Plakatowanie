@@ -9,7 +9,7 @@ public class Main {
 
         BufferedReader bufferedReader;
         String line;
-        int numberOfBuildings,currentHeight;
+        int numberOfBuildings=0,currentHeight;
         Stack<Integer> heights = new Stack<>();
 
         try {
@@ -19,7 +19,7 @@ public class Main {
 
             while ((line = bufferedReader.readLine()) != null){
 
-                currentHeight = Character.getNumericValue(line.charAt(line.length()-1));
+                currentHeight = Integer.parseInt(line.split(" ")[1]);
 
                 if(heights.empty()){
                     heights.push(currentHeight);
@@ -28,25 +28,36 @@ public class Main {
                     heights.push(currentHeight);
                 }
 
-                recursionCheck(currentHeight,heights);
+                if(!heights.empty()) {
+                    recursionCheck(currentHeight, heights);
+                }
+
             }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        System.out.println("Minimalna liczba plakatów to: "+numberOfPosters);
+        if(numberOfBuildings==1) {
+            System.out.println("Minimalna liczba plakatów to: " + numberOfBuildings);
+        }else {
+            System.out.println("Minimalna liczba plakatów to: " + numberOfPosters);
+        }
 
     }
 
     public static void recursionCheck(int currentHeight, Stack<Integer> stack){
-        if(currentHeight<stack.peek()){
-            stack.pop();
-            numberOfPosters++;
-            if(stack.peek()<currentHeight){
-                stack.push(currentHeight);
+        if (!stack.empty()) {
+            if (currentHeight < stack.peek()) {
+                stack.pop();
+                numberOfPosters++;
+                if (!stack.empty()) {
+                    if (stack.peek() < currentHeight) {
+                        stack.push(currentHeight);
+                    }
+                }
+                recursionCheck(currentHeight, stack);
             }
-            recursionCheck(currentHeight,stack);
         }
     }
 
