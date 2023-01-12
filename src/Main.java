@@ -29,7 +29,10 @@ public class Main {
                 }
 
                 if(!heights.empty()) {
-                    recursionCheck(currentHeight, heights);
+                    if(currentHeight<heights.peek()) {
+                        numberOfPosters++;
+                        recursionCheck(currentHeight, heights);
+                    }
                 }
 
             }
@@ -50,7 +53,6 @@ public class Main {
         if (!stack.empty()) {
             if (currentHeight < stack.peek()) {
                 stack.pop();
-                numberOfPosters++;
                 if (!stack.empty()) {
                     if (stack.peek() < currentHeight) {
                         stack.push(currentHeight);
